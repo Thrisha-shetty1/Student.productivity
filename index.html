@@ -1,0 +1,767 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBloom | Student Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">🌷 StudyBloom</div>
+    <p class="side-label">WORKSPACE</p>
+    <nav id="navigation">
+      <button class="nav active" data-page="dashboard">🏠 Dashboard</button>
+      <button class="nav" data-page="tasks">✅ Task Manager</button>
+      <button class="nav" data-page="subjects">📚 Subjects</button>
+      <button class="nav" data-page="calendar">📅 Calendar</button>
+      <button class="nav" data-page="timer">⏱️ Pomodoro</button>
+      <button class="nav" data-page="analytics">📊 Analytics</button>
+      <button class="nav" data-page="attendance">📈 Attendance</button>
+      <button class="nav" data-page="notes">📝 Notes</button>
+      <button class="nav" data-page="goals">🎯 Goals</button>
+      <button class="nav" data-page="settings">⚙️ Settings</button>
+      <button class="nav" data-page="cgpa">🎓 CGPA / SGPA Calculator</button>
+    </nav>
+    <div class="side-quote">
+      <span>🌱</span>
+      <p>Small steps every day lead to big results.</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="muted" id="todayDate"></p>
+        <h2 id="greeting">Hello, Student! ✨</h2>
+      </div>
+      <button class="primary" id="quickAdd">＋ Add task</button>
+    </header>
+
+    <section id="dashboard" class="page active">
+      <div class="welcome">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL STUDY SPACE</p>
+          <h1>Make today count! 🌼</h1>
+          <p>One task at a time. You've got this.</p>
+        </div>
+        <div class="welcome-icon">📖</div>
+      </div>
+
+      <div class="stats">
+        <article class="stat"><span>📝 Total tasks</span><h2 id="totalTasks">0</h2><small>All your tasks</small></article>
+        <article class="stat"><span>✅ Completed</span><h2 id="completedTasks">0</h2><small>Tasks finished</small></article>
+        <article class="stat"><span>⏳ Pending</span><h2 id="pendingTasks">0</h2><small>Still to do</small></article>
+        <article class="stat"><span>⚡ Productivity</span><h2 id="productivity">0%</h2><small>Overall completion</small></article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-heading"><h3>Today's tasks</h3><button class="text-btn" data-go="tasks">View all →</button></div>
+          <div id="todayTasks" class="task-list"></div>
+        </article>
+        <article class="panel">
+          <h3>Daily progress 🌱</h3>
+          <div class="progress-circle" id="dailyCircle"><span id="dailyPercent">0%</span></div>
+          <p class="center muted">Today's completed tasks</p>
+          <div class="progress-track"><div id="dailyBar" class="progress-fill"></div></div>
+          <p id="dailySummary" class="center small"></p>
+        </article>
+        <article class="panel">
+          <h3>Upcoming deadlines 🔔</h3>
+          <div id="upcomingTasks"></div>
+        </article>
+        <article class="panel">
+          <h3>Study streak 🔥</h3>
+          <div class="streak-number"><span id="streak">0</span> days</div>
+          <p class="muted">Keep showing up for yourself!</p>
+          <div class="xp-box">⭐ <span id="xp">0</span> XP earned</div>
+        </article>
+        
+        <!-- EXTRA STUDY PROGRESS SECTION -->
+        <div class="extra-progress">
+            <!-- Weekly Progress -->
+            <div class="panel weekly-progress">
+                <div class="panel-heading">
+            <div>
+            <p class="eyebrow">YOUR JOURNEY 🌱</p>
+            <h3>Weekly Study Progress</h3>
+        </div>
+        <span class="progress-badge">Keep growing!</span>
+    </div>
+    <div class="weekly-summary">
+      <div>
+        <h2 id="weeklyHours">0h 0m</h2>
+        <p class="muted">Total study time</p>
+      </div>
+      <div class="weekly-icon">📚</div>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="weeklyProgressBar"></div>
+    </div>
+    <p class="small muted" id="weeklyProgressText">
+      Start studying to track your weekly progress!
+    </p>
+    </div>
+
+  <!-- Subject Progress -->
+  <div class="panel">
+    <div class="panel-heading">
+      <h3>Subject Progress 📖</h3>
+    </div>
+
+    <div class="subject-progress-item">
+      <div class="subject-progress-heading">
+        <span>☕ Java</span>
+        <span id="javaProgressText">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill subject-java"
+             id="javaProgressBar"></div>
+      </div>
+    </div>
+
+    <div class="subject-progress-item">
+      <div class="subject-progress-heading">
+        <span>💻 C Programming</span>
+        <span id="cProgressText">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill subject-c"
+             id="cProgressBar"></div>
+      </div>
+    </div>
+
+    <div class="subject-progress-item">
+      <div class="subject-progress-heading">
+        <span>📐 Mathematics</span>
+        <span id="mathProgressText">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill subject-math"
+             id="mathProgressBar"></div>
+      </div>
+    </div>
+
+    <div class="subject-progress-item">
+      <div class="subject-progress-heading">
+        <span>🗄️ DBMS</span>
+        <span id="dbmsProgressText">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill subject-dbms"
+             id="dbmsProgressBar"></div>
+      </div>
+    </div>
+
+    <div class="subject-progress-item">
+      <div class="subject-progress-heading">
+        <span>⚙️ DevOps</span>
+        <span id="devopsProgressText">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill subject-devops"
+             id="devopsProgressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Checklist -->
+  <div class="panel">
+    <div class="panel-heading">
+      <h3>Daily Checklist ☀️</h3>
+      <span class="progress-badge" id="checklistCount">0/4</span>
+    </div>
+
+    <label class="checklist-item">
+      <input type="checkbox" class="daily-check">
+      <span>Review today's class notes</span>
+    </label>
+
+    <label class="checklist-item">
+      <input type="checkbox" class="daily-check">
+      <span>Complete one coding practice</span>
+    </label>
+
+    <label class="checklist-item">
+      <input type="checkbox" class="daily-check">
+      <span>Study for at least 25 minutes</span>
+    </label>
+
+    <label class="checklist-item">
+      <input type="checkbox" class="daily-check">
+      <span>Plan tomorrow's tasks</span>
+    </label>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="checklistProgress"></div>
+    </div>
+  </div>
+
+  <!-- Motivational Card -->
+  <div class="motivation-card">
+    <div class="motivation-flower">🌸</div>
+    <p class="eyebrow">A LITTLE REMINDER</p>
+    <h3>Progress, not perfection.</h3>
+    <p>
+      Every small step you take today brings
+      you closer to your dreams.
+    </p>
+    <span>Believe in yourself ✨</span>
+  </div>
+
+</div>
+
+<!-- Floating Quick Add Button -->
+<button class="floating-add" id="floatingAdd"
+        aria-label="Add a new task">
+  ＋
+</button>
+      </div><!-- EXTRA STUDY HUB -->
+<section class="study-hub">
+
+    <div class="hub-heading">
+        <div>
+            <h2>🌷 My Study Hub</h2>
+            <p>Plan your day, focus, and track your progress.</p>
+        </div>
+
+        <button id="focusModeBtn" class="hub-btn">
+            🎯 Focus Mode
+        </button>
+    </div>
+
+    <div class="hub-grid">
+
+        <!-- DAILY PLANNER -->
+        <div class="hub-card">
+            <h3>📅 Daily Study Planner</h3>
+
+            <form id="studyPlanForm">
+                <input
+                    type="text"
+                    id="planSubject"
+                    placeholder="Subject or topic"
+                    required
+                >
+
+                <input
+                    type="time"
+                    id="planTime"
+                    required
+                >
+
+                <button type="submit">Add Study Plan</button>
+            </form>
+
+            <div id="studyPlanList"></div>
+        </div>
+
+        <!-- STUDY TIMER -->
+        <div class="hub-card timer-card">
+            <h3>⏳ Study Session</h3>
+
+            <input
+                type="text"
+                id="sessionSubject"
+                placeholder="What are you studying?"
+            >
+
+            <div id="studyClock">25:00</div>
+
+            <div class="timer-buttons">
+                <button id="startStudy">▶ Start</button>
+                <button id="pauseStudy">⏸ Pause</button>
+                <button id="resetStudy">↻ Reset</button>
+            </div>
+
+            <p id="studyTimerMessage">
+                Ready for a focused session?
+            </p>
+        </div>
+
+        <!-- STUDY HISTORY -->
+        <div class="hub-card">
+            <h3>📈 Today's Study History</h3>
+
+            <div class="study-stat">
+                <span>Minutes studied</span>
+                <strong id="todayStudyMinutes">0</strong>
+            </div>
+
+            <div class="study-stat">
+                <span>Completed sessions</span>
+                <strong id="todayStudySessions">0</strong>
+            </div>
+
+            <div id="studyHistory"></div>
+        </div>
+
+    </div>
+    </section>
+    
+<!-- EXTRA DASHBOARD FEATURES -->
+<div class="extra-dashboard">
+
+    <!-- DAILY MOOD TRACKER -->
+    <div class="panel feature-card">
+        <h3>🌈 How are you feeling today?</h3>
+        <p class="muted">Choose your mood before you start studying.</p>
+
+        <div class="mood-options">
+            <button class="mood-btn" data-mood="Happy">😊</button>
+            <button class="mood-btn" data-mood="Okay">😌</button>
+            <button class="mood-btn" data-mood="Tired">😴</button>
+            <button class="mood-btn" data-mood="Stressed">😟</button>
+        </div>
+
+        <p id="moodMessage">Select your mood 💗</p>
+    </div>
+
+    <!-- DAILY STUDY GOAL -->
+    <div class="panel feature-card">
+        <h3>🎯 Daily Study Goal</h3>
+        <p class="muted">Set your target study minutes.</p>
+
+        <div class="goal-input-row">
+            <input type="number" id="dailyGoalInput"
+                   min="1" value="120">
+            <button class="primary" id="saveDailyGoal">
+                Save goal
+            </button>
+        </div>
+
+        <p>
+            Studied: <strong id="goalMinutesDone">0</strong> minutes
+        </p>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="dailyGoalBar"></div>
+        </div>
+
+        <p id="dailyGoalMessage" class="small muted">
+            Let's reach your goal!
+        </p>
+    </div>
+
+    <!-- QUICK TASK -->
+    <div class="panel feature-card">
+        <h3>⚡ Quick Add Task</h3>
+        <p class="muted">Add a task without opening Task Manager.</p>
+
+        <form id="quickTaskForm">
+            <input id="quickTaskName"
+                   placeholder="What do you need to do?"
+                   required>
+
+            <select id="quickTaskPriority">
+                <option value="High">🔴 High</option>
+                <option value="Medium" selected>🟡 Medium</option>
+                <option value="Low">🟢 Low</option>
+            </select>
+
+            <button class="primary" type="submit">
+                + Add task
+            </button>
+        </form>
+
+        <p id="quickTaskMessage" class="small"></p>
+    </div>
+
+    <!-- MOTIVATION -->
+    <div class="panel feature-card quote-card">
+        <h3>🌸 A Little Motivation</h3>
+
+        <p id="dailyQuote">
+            "Small progress is still progress."
+        </p>
+
+        <button class="secondary" id="newQuote">
+            ✨ New quote
+        </button>
+    </div>
+
+</div>
+    </section>
+
+    <section id="tasks" class="page">
+      <div class="section-heading">
+        <div><p class="eyebrow">STAY ORGANIZED</p><h1>Task Manager ✅</h1></div>
+        <button class="primary" id="addTaskBtn">＋ New task</button>
+      </div>
+      <form id="taskForm" class="panel form-grid">
+        <h3 class="full" id="taskFromTitle">Create a task</h3>
+        <input id="taskName" placeholder="Task name *" required>
+        <select id="taskSubject"><option value="">Choose subject</option></select>
+        <select id="taskPriority">
+          <option value="High">🔴 High priority</option>
+          <option value="Medium" selected>🟡 Medium priority</option>
+          <option value="Low">🟢 Low priority</option>
+        </select>
+        <select id="taskStatus">
+          <option>To Do</option><option>In Progress</option><option>Completed</option>
+        </select>
+        <label>Due date & time<input id="taskDue" type="datetime-local"></label>
+        <label>Repeat
+          <select id="taskRepeat"><option value="None">No repeat</option><option>Daily</option><option>Weekly</option></select>
+        </label>
+        <textarea id="taskNotes" class="full" placeholder="Notes or instructions"></textarea>
+        <input id="taskSubtasks" class="full" placeholder="Subtasks (separate with commas)">
+        <button class="primary full" type="submit">Save task</button>
+        <button class="text-btn full" type="button" id="cancelEdit" hidden>Cancel editing</button>
+      </form>
+
+      <div class="filters panel">
+        <input id="taskSearch" placeholder="🔍 Search tasks...">
+        <select id="filterStatus"><option value="All">All statuses</option><option>To Do</option><option>In Progress</option><option>Completed</option></select>
+        <select id="filterPriority"><option value="All">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select>
+        <select id="sortTasks"><option value="due">Sort: Due date</option><option value="priority">Sort: Priority</option><option value="name">Sort: Name</option></select>
+      </div>
+      <div id="taskList" class="task-list"></div>
+    </section>
+
+    <section id="subjects" class="page">
+      <div class="section-heading"><div><p class="eyebrow">LEARN WITH PURPOSE</p><h1>My Subjects 📚</h1></div></div>
+      <form id="subjectForm" class="panel inline-form">
+        <input id="subjectName" placeholder="New subject name" required>
+        <input id="subjectColor" type="color" value="#a78bfa" title="Subject color">
+        <button class="primary">Add subject</button>
+      </form>
+      <div id="subjectList" class="subject-grid"></div>
+    </section>
+
+    <section id="calendar" class="page">
+      <div class="section-heading"><div><p class="eyebrow">PLAN AHEAD</p><h1>Calendar 📅</h1></div>
+        <div class="calendar-controls"><button id="prevMonth">←</button><strong id="monthLabel"></strong><button id="nextMonth">→</button></div>
+      </div>
+      <div class="panel">
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <div class="legend"><span>🔴 High</span><span>🟡 Medium</span><span>🟢 Low</span></div>
+      </div>
+      <div class="panel"><h3 id="selectedDateTitle">Select a date</h3><div id="calendarEvents"></div></div>
+    </section>
+
+    <section id="timer" class="page">
+      <div class="section-heading"><div><p class="eyebrow">FOCUS ON YOU</p><h1>Pomodoro Timer ⏱️</h1></div></div>
+      <div class="timer-panel panel">
+        <div class="timer-modes">
+          <button class="mode active" data-minutes="25" data-mode="Study">Study</button>
+          <button class="mode" data-minutes="5" data-mode="Break">Short break</button>
+          <button class="mode" data-minutes="15" data-mode="Long break">Long break</button>
+        </div>
+        <div id="timerDisplay" class="timer-display">25:00</div>
+        <p id="timerMode">Time to focus 🌷</p>
+        <div class="timer-actions">
+          <button class="primary" id="startTimer">▶ Start</button>
+          <button class="secondary" id="resetTimer">↻ Reset</button>
+        </div>
+        <label class="focus-toggle"><input type="checkbox" id="focusMode"> Focus mode (hide distractions)</label>
+        <div class="timer-stats"><div><h2 id="sessions">0</h2><p>Sessions today</p></div><div><h2 id="studyMinutes">0</h2><p>Study minutes today</p></div></div>
+      </div>
+    </section>
+
+    <section id="analytics" class="page">
+      <div class="analytics-grid">
+    <div class="analytics-card">
+        <h3>Total Tasks</h3>
+        <div class="value" id="analyticsTotalTasks">0</div>
+    </div>
+
+    <div class="analytics-card">
+        <h3>Completed Tasks</h3>
+        <div class="value" id="analyticsCompleted">0</div>
+    </div>
+
+    <div class="analytics-card">
+        <h3>Pending Tasks</h3>
+        <div class="value" id="analyticsPending">0</div>
+    </div>
+
+    <div class="analytics-card">
+        <h3>Completion Rate</h3>
+        <div class="value" id="analyticsRate">0%</div>
+    </div>
+
+    <div class="analytics-card">
+        <h3>Total Study Hours</h3>
+        <div class="value" id="analyticsHours">0 hrs</div>
+    </div>
+</div>
+
+<div class="analytics-chart">
+    <h3>Weekly Study Hours</h3>
+    <canvas id="studyHoursChart"></canvas>
+</div>
+
+<div class="analytics-chart">
+    <h3>Task Completion</h3>
+    <canvas id="taskCompletionChart"></canvas>
+</div>
+
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">SEE YOUR GROWTH</p>
+      <h1>Analytics 📊</h1>
+    </div>
+  </div>
+
+  <div class="analytics-dashboard">
+
+    <!-- Date Filter -->
+    <div class="analytics-toolbar">
+      <div>
+        <h2>Your Study Insights 🌷</h2>
+        <p>Track your learning journey.</p>
+      </div>
+
+      <select id="analyticsRange">
+        <option value="7">Last 7 days</option>
+        <option value="30">Last 30 days</option>
+        <option value="all">All time</option>
+      </select>
+    </div>
+
+    <!-- Analytics Cards -->
+    <div class="analytics-cards">
+
+      <article class="analytics-card">
+        <span>⏱️ Study Time</span>
+        <h2 id="analyticsTime">0 min</h2>
+        <p id="analyticsTimeCaption">Selected period</p>
+      </article>
+
+      <article class="analytics-card">
+        <span>✅ Completion</span>
+        <h2 id="analyticsCompletion">0%</h2>
+        <p id="analyticsTaskCount">0 of 0 tasks</p>
+      </article>
+
+      <article class="analytics-card">
+        <span>🔥 Study Streak</span>
+        <h2 id="analyticsStreak">0 days</h2>
+        <p>Consecutive active days</p>
+      </article>
+
+      <article class="analytics-card">
+        <span>⭐ Experience Points</span>
+        <h2 id="analyticsXP">0</h2>
+        <p id="analyticsSessions">0 focus sessions</p>
+      </article>
+
+    </div>
+
+    <!-- Charts -->
+    <div class="analytics-charts">
+
+      <article class="analytics-panel">
+        <h3>📈 Study Activity</h3>
+        <p>Your daily study minutes</p>
+
+        <div class="analytics-chart-wrap">
+          <canvas id="weeklyStudyChart"></canvas>
+        </div>
+      </article>
+
+      <article class="analytics-panel">
+        <h3>🎯 Tasks by Status</h3>
+        <p>See your task completion breakdown</p>
+
+        <div class="analytics-chart-wrap">
+          <canvas id="statusChart"></canvas>
+        </div>
+      </article>
+
+      <article class="analytics-panel">
+        <h3>📚 Study Time by Subject</h3>
+        <p>Compare your study hours</p>
+
+        <div class="analytics-chart-wrap">
+          <canvas id="subjectChart"></canvas>
+        </div>
+      </article>
+
+      <article class="analytics-panel">
+        <h3>💡 Productivity Insights</h3>
+        <div id="analyticsInsights"></div>
+      </article>
+
+    </div>
+
+    <!-- Subject Performance -->
+    <article class="analytics-panel">
+      <h3>📖 Subject Performance</h3>
+
+      <div class="analytics-table-wrap">
+        <table class="analytics-table">
+
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Tasks</th>
+              <th>Completed</th>
+              <th>Progress</th>
+              <th>Study Time</th>
+            </tr>
+          </thead>
+
+          <tbody id="analyticsSubjectTable">
+          </tbody>
+
+        </table>
+      </div>
+    </article>
+
+    <!-- Weekly Summary -->
+    <article class="analytics-panel">
+      <h3>🌱 Study Summary</h3>
+      <p id="weeklySummary">
+        Start studying to see your summary!
+      </p>
+
+      <h3>🌟 Most Productive Day</h3>
+      <p id="productiveDay">
+        Your productive day will appear here.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+    </section>
+
+    <section id="attendance" class="page">
+      <div class="section-heading"><div><p class="eyebrow">KEEP TRACK</p><h1>Attendance 🎓</h1></div></div>
+      <form id="attendanceForm" class="panel inline-form">
+        <select id="attendanceSubject" required></select>
+        <input id="attended" type="number" min="0" placeholder="Classes attended" required>
+        <input id="totalClasses" type="number" min="0" placeholder="Total classes" required>
+        <button class="primary">Save attendance</button>
+      </form>
+      <div id="attendanceList" class="panel"></div>
+    </section>
+
+    <section id="notes" class="page">
+      <div class="section-heading"><div><p class="eyebrow">SAVE YOUR IDEAS</p><h1>My Notes 📝</h1></div></div>
+      <form id="noteForm" class="panel form-grid">
+        <h3 class="full">Create a note</h3>
+        <input id="noteTitle" placeholder="Note title *" required>
+        <select id="noteSubject"></select>
+        <textarea id="noteContent" class="full" rows="5" placeholder="Write your notes here..." required></textarea>
+        <label class="full"><input type="checkbox" id="notePinned"> 📌 Pin this note</label>
+        <button class="primary full">Save note</button>
+      </form>
+      <input id="noteSearch" class="search-box" placeholder="🔍 Search notes...">
+      <div id="notesList" class="notes-grid"></div>
+    </section>
+
+    <section id="goals" class="page">
+      <div class="section-heading"><div><p class="eyebrow">DREAM IT. DO IT.</p><h1>My Goals 🎯</h1></div></div>
+      <form id="goalForm" class="panel inline-form">
+        <input id="goalName" placeholder="Goal name *" required>
+        <select id="goalType"><option>Daily</option><option>Weekly</option><option>Semester</option></select>
+        <input id="goalTarget" type="number" min="1" value="10" placeholder="Target">
+        <button class="primary">Add goal</button>
+      </form>
+      <div id="goalsList" class="goal-grid"></div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="section-heading"><div><p class="eyebrow">MAKE IT YOURS</p><h1>Settings ⚙️</h1></div></div>
+      <div class="panel settings-panel">
+        <label>Your name <input id="userName" placeholder="Student"></label>
+        <label>Study session (minutes) <input id="studyLength" type="number" min="1" max="180" value="25"></label>
+        <label>Short break (minutes) <input id="breakLength" type="number" min="1" max="60" value="5"></label>
+        <button class="primary" id="saveSettings">Save settings</button>
+        <hr>
+        <h3>Data management</h3>
+        <button class="secondary" id="exportData">⬇ Export backup</button>
+        <label class="secondary import-label">⬆ Import backup<input type="file" id="importData" accept=".json" hidden></label>
+        <button class="danger" id="clearData">Delete all data</button>
+        <p class="muted small">Your information is saved in this browser. Export a backup before clearing browser data.</p>
+      </div>
+    </section>
+    <!-- CGPA CALCULATOR -->
+<section id="cgpa" class="page">
+  <div class="feature-heading">
+    <p class="eyebrow">ACADEMIC TOOL</p>
+    <h1>🎓 Grade Calculator</h1>
+    <p>Keep track of your academic progress.</p>
+  </div>
+
+  <div class="feature-card">
+    <h2>SGPA Calculator</h2>
+
+    <form id="sgpaForm">
+      <div id="subjectRows">
+        <div class="grade-row">
+          <input class="grade-subject"
+                 placeholder="Subject name" required>
+          <input class="grade-credit"
+                 type="number" min="1" max="30"
+                 placeholder="Credits" required>
+          <input class="grade-point"
+                 type="number" min="0" max="10" step="0.1"
+                 placeholder="Grade point" required>
+        </div>
+      </div>
+
+      <button type="button" id="addGradeRow"
+              class="feature-btn secondary">
+        + Add Subject
+      </button>
+
+      <button type="submit" class="feature-btn">
+        Calculate SGPA
+      </button>
+    </form>
+
+    <div id="sgpaResult" class="feature-result">
+      Your SGPA will appear here.
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <h2>CGPA Calculator</h2>
+    <p>Add your semester GPA and total credits.</p>
+
+    <form id="cgpaForm">
+      <div id="semesterRows">
+        <div class="semester-row">
+          <input type="number" class="semester-gpa"
+                 min="0" max="10" step="0.01"
+                 placeholder="Semester GPA" required>
+          <input type="number" class="semester-credit"
+                 min="1" max="100"
+                 placeholder="Total credits" required>
+        </div>
+      </div>
+
+      <button type="button" id="addSemesterRow"
+              class="feature-btn secondary">
+        + Add Semester
+      </button>
+
+      <button type="submit" class="feature-btn">
+        Calculate CGPA
+      </button>
+    </form>
+
+    <div id="cgpaResult" class="feature-result">
+      Your CGPA will appear here.
+    </div>
+  </div>
+</section>
+
+    <footer>Made with 💗 for your learning journey</footer>
+    </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
