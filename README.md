@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 🌸 StudyBloom – Student Productivity Planner
 
 A web-based productivity planner designed to help students organize academic tasks, manage priorities, and track their study progress.
@@ -67,7 +67,7 @@ Student.productivity/
 - 🔐 User authentication
 - 📈 More detailed productivity analytics
 
-## 😊 Author
+## 👩‍💻 Author
 
 **Thrisha Shetty**
 
@@ -75,6 +75,3 @@ Student.productivity/
 💻 Specialization: DevOps
 
 🔗 [GitHub Profile](https://github.com/Thrisha-shetty1)
-=======
-# Student.productivity
->>>>>>> e98f1a318aaeb4ebece182512d0bf1b11f998317
