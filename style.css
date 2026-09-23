@@ -1633,3 +1633,26 @@ body.focus-mode .welcome {
         grid-template-columns: 1fr;
     }
 }
+/* =================================
+   MOBILE RESPONSIVE DESIGN
+   ================================= */
+
+@media (max-width: 768px) {
+
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .container {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+}
