@@ -1,5 +1,5 @@
 
-# StudyBloom – Student Productivity Planner
+# --StudyBloom – Student Productivity Planner
 
 A web-based productivity planner designed to help students organize academic tasks, manage priorities, and track their study progress.
 
